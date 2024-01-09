@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #colorMixer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #textColor {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+        #textInput {
+            margin-top: 20px;
+        }
+        #changeColorBtn {
+            margin-top: 10px;
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="colorMixer">
+        <label for="red" >Red:</label>
+        <input type="range" id="red" min="0" max="255" value="0">
+        
+        <label for="green">Green:</label>
+        <input type="range" id="green" min="0" max="255" value="0">
+        
+        <label for="blue">Blue:</label>
+        <input type="range" id="blue" min="0" max="255" value="0">
+    </div>
+
+
+    <div id="textColor">Chanage the 3 color ranges above and observe my color chanage</div>
+
+   
+
+    <script>
+        const redInput = document.getElementById("red");
+        const greenInput = document.getElementById("green");
+        const blueInput = document.getElementById("blue");
+        const textColorDiv = document.getElementById("textColor");
+        const textInput = document.getElementById("text");
+        
+
+        function updateTextColor() {
+            const redValue = redInput.value;
+            const greenValue = greenInput.value;
+            const blueValue = blueInput.value;
+
+            const textColor = `rgb(${redValue}, ${greenValue}, ${blueValue})`;
+            textColorDiv.style.color = textColor;
+        }
+
+        function changeTextColor() {
+            updateTextColor(); 
+            const newText = textInput.value;
+            textColorDiv.textContent = newText;
+        }
+
+        redInput.addEventListener("input", updateTextColor);
+        greenInput.addEventListener("input", updateTextColor);
+        blueInput.addEventListener("input", updateTextColor);
+       
+    </script>
+
+</body>
+</html>

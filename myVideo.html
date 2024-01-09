@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Video</title>
+   
+</head>
+<body style="text-align: center;">
+    <video id="video" src="./sources/frozen.mp4" poster="./sources/frozen.jpg" width="600"></video>
+    <p></p>
+    <div> 
+    <input type="range" id="videoSlider" value="5">
+    <div id="durationDisplay">0:00 / 0:00</div>
+    </div>
+    
+    <p></p>
+    <button onclick="playVideo()"> play </button>
+    <button onclick="pauseVideo()">pause</button>
+    <button ><<</button>
+    <button onclick="backVideo()"><</button>
+    <button onclick="fastForwardVideo()">></button>
+    <button >>></button>
+
+    <button onclick="muteVideo()">mute</button>
+    <button onclick="FullScreen()">Fullscreen</button>
+    <p>Volume</p>
+    <input type="range" id="volumeSlider" min="0" max="1" step="0.1"   value="1" oninput="volumeControl();">
+    <p>Speed</p>
+    <input type="range"  id="speedSlider" min="0.5" max="2" step="0.1"   value="1" oninput="speedControl();">
+   
+
+    <script>
+
+        
+        vidControl = document.getElementById("video");
+        volumeSlider = document.getElementById('volumeSlider');
+        speedSlider = document.getElementById('speedSlider');
+        videoSlider = document.getElementById('videoSlider');
+        durationDisplay = ('durationDisplay');
+        vidControl.addEventListener('timeupdate', updateProgressBar);
+
+        function playVideo() {
+            vidControl.play();
+            
+        }
+        function pauseVideo() {
+            vidControl.pause();
+            
+        }
+        function muteVideo() {
+            vidControl.muted = !vidControl.muted;
+        }
+        function volumeControl() {
+            vidControl.volume = volumeSlider.value;
+        }
+        function speedControl() {
+            vidControl.playbackRate  = speedSlider.value;
+            
+        }
+        function updateProgressBar() {
+            var currentTime = formatTime(vidControl.currentTime);
+            var duration = formatTime(vidControl.duration);
+            var value = (vidControl.currentTime / vidControl.duration) * 100;
+
+            videoSlider.value = value;
+            durationDisplay.textContent =  currentTime + ' / ' + duration;
+        }
+        function formatTime(time) {
+            var minutes = Math.floor(time / 60);
+            var seconds = Math.floor(time % 60);
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            return minutes + ':' + seconds;
+        }
+        videoSlider.addEventListener('input', function () {
+            var seekTime = vidControl.duration * (videoSlider.value / 100);
+            vidControl.currentTime = seekTime;
+        });
+        
+        function backVideo() {
+        vidControl.currentTime -= 5; 
+    }
+
+        function fastForwardVideo() {
+        vidControl.currentTime += 5; 
+    }
+    function FullScreen() {
+            if (vidControl.requestFullscreen) {
+                vidControl.requestFullscreen();
+            }
+        
+        }
+        
+       
+       
+    </script>
+</body>
+</html>
